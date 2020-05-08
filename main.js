@@ -18,10 +18,15 @@ noteForm.addEventListener("submit", function(){
 
 
 // 2 Send the INPUT to the database server. Note name and content
-// fetch(url){
-// method: "POST",
-// headers: {"Content-Type": "application/json"},
-// body: "JSON.stringify"
+function createNewNote(noteText, nameText) {
+return fetch("http://localhost:3000/notes", {
+method: "POST",
+headers: {"Content-Type": "application/json"},
+body: JSON.stringify({item: noteText, name: nameText})
+})
+.then(response => response.json())
+.then(data => console.log(data))
+}
 
 
 
