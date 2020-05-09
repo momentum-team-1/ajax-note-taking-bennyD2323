@@ -1,6 +1,6 @@
 console.log("hellowwww")
 let noteForm = document.querySelector("#noteForm")
-
+let noteList = document.querySelector(".noteList")
 
 
 // 1 Create Event Listener with submit button
@@ -40,23 +40,58 @@ function renderNotes(){
     })
     .then(response => response.json())
     .then (function(data) {
-        let nameList = document.createElement("ul")
-        for (let entry of data) {
+        let list = document.createElement("ul")
+    for (let entry of data) {
         let listItem = document.createElement("li")
         listItem.dataset.id = entry.id
         listItem.innerText = entry.item
-        nameList.appendChild(listItem)
+        let deleteIcon = document.createElement("span")
+        deleteIcon.id = "delete"
+        deleteIcon.classList.add("fa", "fa-trash")
+        let editIcon = document.createElement("span")
+        editIcon.id = "edit"
+        editIcon.classList.add("fa", "fa-edit")
+        listItem.appendChild(editIcon)
+        listItem.appendChild(deleteIcon) 
+        list.appendChild(listItem)
     }
-    let noteList = document.querySelector(".noteList")
-    noteList.appendChild(nameList)
+    noteList.appendChild(list)
 })
 }
+
+
+// DELETE ITEMS
+noteList.addEventListener("click", function (event) {
+    console.log(event.target)
+    if (event.target.matches ("#delete")) {
+        console.log(event.target.parentElement)
+        deleteNoteItem(event.target.parentElement.dataset.id)
+    }
+})
+function deleteNoteItem(noteId) {
+    fetch(`http://localhost:3000/notes/${noteId}` , {
+        method: "DELETE"
+    })
+    .then(response => response.json())
+}
+// EDIT ITEMS OMG
+
+noteList.addEventListener("click", function (event) {
+    console.log(event.target)
+    if (event.target.matches ("#edit")) {
+        console.log(event.target.parentElement)
+        deleteNoteItem(event.target.parentElement.dataset.id)
+    }
+})
+function editNoteItem(noteId) {
+    fetch("http://localhost:3000/notes", {
+    method: "PATCH",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({item:noteText, name:nameText})
+})
+    .then(response => response.json())
+}
 renderNotes()
-
-
-// UPDATE a list of notes on the page with NAME
-
-
 // UPDATE the text content of the note chosen
 
 
