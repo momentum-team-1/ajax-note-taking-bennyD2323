@@ -1,6 +1,6 @@
 console.log("hellowwww")
 let noteForm = document.querySelector("#noteForm")
-Event
+
 
 
 // 1 Create Event Listener with submit button
@@ -13,7 +13,9 @@ noteForm.addEventListener("submit", function(){
         let noteText = textInput.value
     console.log(noteText)
     console.log(nameText)
-    createNewNote(noteText)
+
+    // ""
+    createNewNote(noteText, nameText)
 })
 
 
@@ -22,7 +24,7 @@ function createNewNote(noteText, nameText) {
 return fetch("http://localhost:3000/notes", {
 method: "POST",
 headers: {"Content-Type": "application/json"},
-body: JSON.stringify({item: noteText, name: nameText})
+body: JSON.stringify({item:noteText, name:nameText})
 })
 .then(response => response.json())
 .then(data => console.log(data))
@@ -32,8 +34,24 @@ body: JSON.stringify({item: noteText, name: nameText})
 
 
 // 3 FETCH the note from the database server
-
-
+function renderNotes(){
+    fetch("http://localhost:3000/notes",{
+        method: "GET"
+    })
+    .then(response => response.json())
+    .then (function(data) {
+        let nameList = document.createElement("ul")
+        for (let entry of data) {
+        let listItem = document.createElement("li")
+        listItem.dataset.id = entry.id
+        listItem.innerText = entry.item
+        nameList.appendChild(listItem)
+    }
+    let noteList = document.querySelector(".noteList")
+    noteList.appendChild(nameList)
+})
+}
+renderNotes()
 
 
 // UPDATE a list of notes on the page with NAME
@@ -44,7 +62,6 @@ body: JSON.stringify({item: noteText, name: nameText})
 
 
 // delete the note NAME AND CONTENT
-
 
 
 
