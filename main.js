@@ -18,7 +18,6 @@ noteForm.addEventListener("submit", function(){
     createNewNote(noteText, nameText)
 })
 
-
 // 2 Send the INPUT to the database server. Note name and content
 function createNewNote(noteText, nameText) {
 return fetch("http://localhost:3000/notes", {
@@ -30,9 +29,6 @@ body: JSON.stringify({item:noteText, name:nameText})
 .then(data => console.log(data))
 }
 
-
-
-
 // 3 FETCH the note from the database server
 function renderNotes(){
     fetch("http://localhost:3000/notes",{
@@ -42,15 +38,20 @@ function renderNotes(){
     .then (function(data) {
         let list = document.createElement("ul")
     for (let entry of data) {
-        let listItem = document.createElement("li")
+
+    let listItem = document.createElement("li")
         listItem.dataset.id = entry.id
-        listItem.innerText = entry.item
-        let deleteIcon = document.createElement("span")
+        listItem.innerText = entry.name
+
+    let deleteIcon = document.createElement("span")
         deleteIcon.id = "delete"
         deleteIcon.classList.add("fa", "fa-trash")
-        let editIcon = document.createElement("span")
+
+    let editIcon = document.createElement("span")
         editIcon.id = "edit"
         editIcon.classList.add("fa", "fa-edit")
+    
+    
         listItem.appendChild(editIcon)
         listItem.appendChild(deleteIcon) 
         list.appendChild(listItem)
@@ -59,10 +60,9 @@ function renderNotes(){
 })
 }
 
-
 // DELETE ITEMS
 noteList.addEventListener("click", function (event) {
-    console.log(event.target)
+    // console.log(event.target)
     if (event.target.matches ("#delete")) {
         console.log(event.target.parentElement)
         deleteNoteItem(event.target.parentElement.dataset.id)
@@ -77,19 +77,42 @@ function deleteNoteItem(noteId) {
 // EDIT ITEMS OMG
 
 noteList.addEventListener("click", function (event) {
-    console.log(event.target)
+    // console.log(event.target)
+
     if (event.target.matches ("#edit")) {
-        console.log(event.target.parentElement)
-        deleteNoteItem(event.target.parentElement.dataset.id)
-    }
+        
+        console.log( "first phase")
+        let editInput = document.createElement("input")
+        editInput.classList.add("editInput")
+        let editTarget = event.target.parentElement
+        let editButton = document.createElement("button")
+        editButton.id = "editButton"
+        editButton.innerText = "Edit Note"
+        editTarget.appendChild(editInput)
+        editTarget.appendChild(editButton)
+}
+    
 })
-function editNoteItem(noteId) {
-    fetch("http://localhost:3000/notes", {
+noteList.addEventListener("click", function (event) {
+    if (event.target.matches("#editButton")) {
+        // console.log(event.target.parentElement)
+        let editText = document.querySelector(".editInput")
+        let newText = editText.value
+        let newTextId = event.target.parentElement.dataset.id
+        console.log(newText)
+        editNoteItem(newText, newTextId)
+        event.preventDefault()
+}
+})
+
+function editNoteItem(newText, newTextId) {
+    fetch(`http://localhost:3000/notes/${newTextId}` , {
     method: "PATCH",
     headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({item:noteText, name:nameText})
+    body: JSON.stringify({item:newText})
 })
     .then(response => response.json())
+    .then(data => console.log(data))
 }
 renderNotes()
 // UPDATE the text content of the note chosen
