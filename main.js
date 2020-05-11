@@ -3,9 +3,27 @@ let noteForm = document.querySelector("#noteForm")
 let noteList = document.querySelector(".noteList")
 
 
+var coll = document.getElementsByClassName("collapse");
+var i;
+
+// for (i = 0; i < coll.length; i++) {
+//     coll[i].addEventListener("click", function() {
+//         event.preventDefault();
+//         if (event.target.matches (".collapse")){
+//         this.classList.toggle("active");
+//         var content = this.nextElementSibling;
+//         if (content.style.display === "block") {
+//           content.style.display = "none";
+//         } else {
+//           content.style.display = "block";
+//         }
+//       }});
+//     }
+
+
 // 1 Create Event Listener with submit button
 noteForm.addEventListener("submit", function(){
-    console.log("mammamia");
+    
     event.preventDefault();
         let nameInput = document.querySelector("#nameInput")
         let nameText = nameInput.value
@@ -40,8 +58,18 @@ function renderNotes(){
     for (let entry of data) {
 
     let listItem = document.createElement("li")
+        // listItem.dataset.id = entry.idf
         listItem.dataset.id = entry.id
-        listItem.innerText = entry.name
+        let  noteContent = entry.item
+
+        let buttName = entry.name
+        let listButton = document.createElement("button")
+        listButton.classList.add ("collapse")
+        listButton.innerText = buttName
+        let noteMake = document.createElement("div")
+        noteMake.classList.add("dropContent")
+        let noteBox = document.createElement("p")
+        noteBox.innerText = noteContent
 
     let deleteIcon = document.createElement("span")
         deleteIcon.id = "delete"
@@ -50,13 +78,33 @@ function renderNotes(){
     let editIcon = document.createElement("span")
         editIcon.id = "edit"
         editIcon.classList.add("fa", "fa-edit")
+// ADD P DIV FOR BOX DROP CONTENT;
+
+    listItem.appendChild(listButton)
     
     
+        list.appendChild(listItem)
+        listItem.appendChild(noteMake)
+        noteMake.appendChild(noteBox)
         listItem.appendChild(editIcon)
         listItem.appendChild(deleteIcon) 
-        list.appendChild(listItem)
+
+        
     }
     noteList.appendChild(list)
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+            event.preventDefault();
+            if (event.target.matches (".collapse")){
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+              content.style.display = "none";
+            } else {
+              content.style.display = "block";
+            }
+          }});
+        }
 })
 }
 
