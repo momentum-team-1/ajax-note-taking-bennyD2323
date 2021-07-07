@@ -1,0 +1,64 @@
+body{
+    background-color:#FFF8F0;
+    color:#392F5a;
+    font-weight:bold;
+    font-family:Verdana;
+}
+
+.collapse {
+    background-color: #f4d06f;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 35%;
+    border: none;
+    text-align: center;
+    outline: none;
+    font-size: 15px;
+    font-weight:bold;
+  }
+
+  .dropContent {
+    padding: 0 18px;
+    display: none;
+    overflow: hidden;
+    width:32%;
+    background-color: #9dd9d2;
+    text-align:center;
+    
+  }
+  .fa{
+      font-size:20px;
+      padding:5px;
+  }
+  li{
+      margin-top:15px;
+  }
+  .noteList{
+      margin-top:30px;
+  }
+  #nameInput{
+   font-size:20px; 
+  }
+  #textInput{
+      font-size:20px;
+  }
+  h2{
+    font-size:48px;
+  }
+  header{
+      margin-top:-25px;
+      margin-left:18px;
+      margin-bottom:-15px;
+  }
+  label{
+      margin-left:px;
+      font-size:20px;
+  }
+  #noteButt{
+      font-size:20px;
+      font-family:Arial;
+      Font-weight:bold;
+      color:#392f5a;
+      background-color:#f4d06f;
+  }

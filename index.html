@@ -5,8 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Notes</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href= "style.css">
+  <script src="main.js" defer></script>
 </head>
 <body>
+  <header>
+  <h2>Scratchpad</h2>
+  </header>
+  <form id="noteForm">
   
+  <label for="nameInput">Name:</label>
+  <input type="text" id="nameInput">
+  <label for ="textInput">Note:</label>
+  <input type="text" id="textInput">
+  <button id= "noteButton" type="submit">New Note</button>
+  <div class = noteList></div>
+</form>
 </body>
 </html>
